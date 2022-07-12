@@ -8,7 +8,7 @@ app.set("view engine", "ejs")
 app.use(bodyParser({urlencoded: true}))
 
 app.get("/", (req, res) => {
-
+    res.render('index', {name: 'Owain'})
 })
 
 app.listen(PORT, console.log(`The app is listening on port ${ PORT }`))
