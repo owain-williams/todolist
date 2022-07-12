@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const app = express()
 const PORT = 3000
 
+let tasks = ['Buy food', 'Cook food', 'Eat food']
+
 app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({extended: true}))
 
@@ -15,12 +17,12 @@ app.get("/", (req, res) => {
         month: 'long'
     }
     let day = today.toLocaleString('en-us', dateOptions)
-    res.render('index', {day: day})
+    res.render('index', {day: day, tasks: tasks})
 })
 
 app.post('/', (req, res) => {
-    newTask = req.body.newTask
-    console.log(newTask)
+    tasks.push(req.body.newTask)
+    res.redirect('/')
 })
 
 app.listen(PORT, console.log(`The app is listening on port ${ PORT }`))

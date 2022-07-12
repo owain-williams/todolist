@@ -10,9 +10,10 @@
     <h1><%= day %></h1>
     
     <ul>
-        <li>Buy Food</li>
-        <li>Cook Food</li>
-        <li>Eat Food</li>
+        <% for(let i = 0; i<tasks.length; i++) {%>
+        <li><%= tasks[i] %> </li>
+        <% } %> 
+
     </ul>
 
     <form action="/" method="post">
