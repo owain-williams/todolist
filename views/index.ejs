@@ -7,19 +7,25 @@
     <title>Todolist</title>
 </head>
 <body>
-    <h1><%= day %></h1>
+    <link rel="stylesheet" href="/css/styles.css">
+    <div class="box" id="heading">
+        <h1><%= day %></h1>
+    </div>
     
-    <ul>
+    <div class="box">
         <% for(let i = 0; i<tasks.length; i++) {%>
-        <li><%= tasks[i] %> </li>
-        <% } %> 
+            <div class="item">
+                <input type="checkbox">
+                <p><%= tasks[i] %> </p>
+            </div>
+        <% } %>  
+    </div>
 
-    </ul>
-
-    <form action="/" method="post">
-        <input type="text" name="newTask" id="newTask">
-        <input type="submit" value="Go!">
-    </form>
-
+    <div class="box">
+        <form class="item" action="/" method="post">
+            <input type="text" name="newTask" id="newTask" placeholder="New Item" autocomplete="off">
+            <button type="submit" name="button">+</button>
+        </form>
+    </div>
 </body>
 </html>
