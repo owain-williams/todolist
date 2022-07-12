@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { isReadable } = require("stream");
+const date = require(__dirname + "/date.js")
 
 const app = express()
 const PORT = 3000
@@ -13,18 +13,16 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('public'))
 
 app.get("/", (req, res) => {
-    let today = new Date()
-    const dateOptions = {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
-    }
-    let day = today.toLocaleString('en-us', dateOptions)
+    let day = date.getDay()
     res.render('index', {listTitle: day, tasks: tasks})
 })
 
 app.get('/work', (req, res) => {
     res.render('index', {listTitle: 'Work', tasks: workTasks})
+})
+
+app.get('/about', (req, res) => {
+    res.render('about')
 })
 
 app.post('/', (req, res) => {
