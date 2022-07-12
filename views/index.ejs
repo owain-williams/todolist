@@ -7,6 +7,18 @@
     <title>Todolist</title>
 </head>
 <body>
-    <%= name %> 
+    <h1><%= day %></h1>
+    
+    <ul>
+        <li>Buy Food</li>
+        <li>Cook Food</li>
+        <li>Eat Food</li>
+    </ul>
+
+    <form action="/" method="post">
+        <input type="text" name="newTask" id="newTask">
+        <input type="submit" value="Go!">
+    </form>
+
 </body>
 </html>
