@@ -1,12 +1,51 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose')
 const date = require(__dirname + "/date.js")
 
 const app = express()
 const PORT = 3000
 
-let tasks = ['Buy food', 'Cook food', 'Eat food']
-let workTasks = ['Do work']
+// let tasks = ['Buy food', 'Cook food', 'Eat food']
+// let workTasks = ['Do work']
+main().catch(err => console.log(err));
+async function main() {
+    await mongoose.connect('mongodb://localhost:27017/todolistDB');
+}
+
+const taskSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    // done: Boolean
+})
+const Task = mongoose.model('task', taskSchema)
+
+// // Initialise some default tasks
+// const task1 = new Task ({ name: 'Buy Food' })
+// const task2 = new Task ({ name: 'Cook food' })
+// const task3 = new Task ({ name: 'Eat food' })
+// const defaultTasks = [task1, task2, task3]
+
+// // Create default tasks in collection
+// Task.insertMany(defaultTasks, (err) => {
+//     if (err) {
+//         console.log(err)
+//     } else {
+//         console.log('Success!')
+//     }
+// })
+
+let tasks = []
+Task.find({}, (err, foundTasks) => {
+    if (err) {
+        console.log(err)
+    } else {
+        tasks = foundTasks
+        console.log(tasks)
+    }
+})
 
 app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({extended: true}))

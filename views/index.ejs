@@ -5,12 +5,14 @@
     </div>
     
     <div class="box">
-        <% for(let i = 0; i<tasks.length; i++) {%>
+
+        <% tasks.forEach((task) => { %>
             <div class="item">
-                <input type="checkbox">
-                <p><%= tasks[i] %> </p>
+                <input type="checkbox" name="<%= task.name %>">
+                <p><%= task.name %></p>
             </div>
-        <% } %>  
+        <% }) %>
+ 
     </div>
 
     <div class="box">
