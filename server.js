@@ -68,4 +68,15 @@ app.post('/', (req, res) => {
     res.redirect('/')  
 })
 
+app.post('/delete', (req, res) => {
+    const idToDelete = req.body.checkbox
+    Task.deleteOne({_id: idToDelete}, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect('/')
+        }
+    })
+})
+
 app.listen(PORT, console.log(`The app is listening on port ${ PORT }`))
