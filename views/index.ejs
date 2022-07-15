@@ -12,6 +12,7 @@
                     <input type="checkbox" name="checkbox" value="<%=task._id%>" onChange="this.form.submit()">
                     <p><%= task.name %></p>
                 </div>
+                <input type="hidden" name="listName" value="<%= listTitle %>"></input>
             </form>
         <% }) %>
  

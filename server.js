@@ -18,7 +18,12 @@ const taskSchema = new mongoose.Schema({
     },
     // done: Boolean
 })
+const listSchema = new mongoose.Schema({
+    name: String,
+    items: [taskSchema]
+})
 const Task = mongoose.model('task', taskSchema)
+const List = mongoose.model('list', listSchema)
 
 // Initialise some default tasks
 const task1 = new Task ({ name: 'Buy Food' })
@@ -59,24 +64,67 @@ app.get('/about', (req, res) => {
     res.render('about')
 })
 
+// Make dynamic lists, depending on route
+app.get('/:customListName', (req, res) => {
+    const customListName = req.params.customListName
+    List.findOne({name: customListName}, (err, foundList) => {
+        if (!err) {
+            if (!foundList) {
+                // Create a new list
+                const list = new List({
+                    name: customListName,
+                    items: defaultTasks
+                })
+                list.save()
+                res.redirect(`/${customListName}`)
+            } else {
+                // Show an existing list
+                res.render('index', {listTitle: foundList.name, tasks: foundList.items})
+            }
+        }
+    })
+})
+
 app.post('/', (req, res) => {
     const newTaskName = req.body.newTask
+    const listName = req.body.list
     const task = new Task ({
         name: newTaskName
     })
-    task.save()  
-    res.redirect('/')  
+    if (listName === 'Today') {
+        task.save()  
+        res.redirect('/') 
+    } else {
+        List.findOne({name: listName}, (err, foundList) => {
+            foundList.items.push(task)
+            foundList.save()
+            res.redirect(`/${listName}`)
+        })
+    }
+
+     
 })
 
 app.post('/delete', (req, res) => {
     const idToDelete = req.body.checkbox
-    Task.deleteOne({_id: idToDelete}, (err) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.redirect('/')
-        }
-    })
+    const listName = req.body.listName
+
+    if (listName === 'Today') {
+        Task.findByIdAndDelete(idToDelete, (err) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.redirect('/')
+            }
+        })
+    } else {
+        List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: idToDelete}}}, (err) => {
+            res.redirect(`/${listName}`)
+        })
+        
+    }
+
+    
 })
 
 app.listen(PORT, console.log(`The app is listening on port ${ PORT }`))
