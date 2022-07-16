@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
+const _ = require('lodash')
 const date = require(__dirname + "/date.js")
 
 const app = express()
@@ -66,7 +67,7 @@ app.get('/about', (req, res) => {
 
 // Make dynamic lists, depending on route
 app.get('/:customListName', (req, res) => {
-    const customListName = req.params.customListName
+    const customListName = _.capitalize(req.params.customListName)
     List.findOne({name: customListName}, (err, foundList) => {
         if (!err) {
             if (!foundList) {
