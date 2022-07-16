@@ -9,7 +9,7 @@ const PORT = 3000
 
 // let tasks = ['Buy food', 'Cook food', 'Eat food']
 // let workTasks = ['Do work']
-mongoose.connect('mongodb://localhost:27017/todolistDB');
+mongoose.connect('mongodb+srv://andersdigital:AndersD!g!tal1405@todolist-ow.xipgpyc.mongodb.net/?retryWrites=true&w=majority');
 
 
 const taskSchema = new mongoose.Schema({
