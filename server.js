@@ -5,7 +5,10 @@ const _ = require('lodash')
 const date = require(__dirname + "/date.js")
 
 const app = express()
-const PORT = 3000
+let port = process.env.port
+if (port === null || port === "") {
+    port = 3000
+}
 
 // let tasks = ['Buy food', 'Cook food', 'Eat food']
 // let workTasks = ['Do work']
@@ -128,4 +131,4 @@ app.post('/delete', (req, res) => {
     
 })
 
-app.listen(PORT, console.log(`The app is listening on port ${ PORT }`))
+app.listen(port, console.log(`The app is listening on port ${ port }`))
