@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
             res.redirect('/')
         } else {
             tasks = foundTasks
-            res.render('index', {listTitle: "Todo", tasks: tasks}) 
+            res.render('index', {listTitle: "Todo list", tasks: tasks}) 
         }
     })  
 })
